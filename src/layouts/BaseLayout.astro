@@ -27,7 +27,7 @@ const alternatePaths = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={t.meta.description} />
-    <link rel="icon" type="image/png" href="/dayli-logo.png" />
+    <link rel="icon" type="image/png" href={`${import.meta.env.BASE_URL}dayli-logo.png`} />
     <link rel="canonical" href={canonical} />
     {
       Object.entries(alternatePaths).map(([lang, path]) => (
