@@ -1,0 +1,88 @@
+---
+import type { Locale } from '../../../i18n/ui';
+import { getDir } from '../../../i18n/ui';
+import { getFeatureMockupCopy } from '../../../i18n/featureMockups';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const m = getFeatureMockupCopy(locale).whatsapp;
+const dir = getDir(locale);
+const activeChat = m.chats.find((c) => c.active) ?? m.chats[0];
+---
+
+<div class="fs-mockup-inner h-full min-h-[380px] sm:min-h-[440px]" dir={dir}>
+  <div class="flex h-full flex-col">
+    <div class="fs-mockup-header">
+      <div>
+        <h4 class="fs-mockup-title">{m.title}</h4>
+        <p class="fs-mockup-subtitle">{m.subtitle}</p>
+      </div>
+      <div class="fs-mockup-search">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <span>{m.search}</span>
+      </div>
+    </div>
+
+    <div class="fs-mockup-body">
+      <div class="fs-wa-list">
+        <div class="fs-wa-toggle">
+          <div>
+            <div class="fs-wa-toggle-title">{m.autoReplyTitle}</div>
+            <div class="fs-wa-toggle-desc">{m.autoReplyDesc}</div>
+          </div>
+          <div class="fs-toggle-on" aria-hidden="true"><div class="fs-toggle-knob"></div></div>
+        </div>
+        {m.chats.map((c) => (
+          <div class:list={['fs-wa-chat-row', c.active && 'fs-wa-chat-row--active']}>
+            <div class:list={['fs-avatar', c.active && 'fs-avatar--active']}>{c.init}</div>
+            <div class="fs-wa-chat-meta">
+              <div class="fs-wa-chat-top">
+                <span class:list={['fs-wa-name', c.active && 'fs-wa-name--active']}>{c.name}</span>
+                <span class:list={['fs-wa-time', c.badge && 'fs-wa-time--badge']}>{c.time}</span>
+              </div>
+              <div class="fs-wa-chat-bottom">
+                <span class="fs-wa-msg">{c.msg}</span>
+                {c.badge && c.badge > 0 && <span class="fs-wa-badge">{c.badge}</span>}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="fs-wa-conversation">
+        <div class="fs-wa-conv-header">
+          <div class="fs-avatar fs-avatar--active">{activeChat.init}</div>
+          <div>
+            <div class="fs-wa-conv-name">{activeChat.name}</div>
+            <div class="fs-wa-online"><span class="fs-wa-dot"></span> {m.online}</div>
+          </div>
+        </div>
+        <div class="fs-wa-messages">
+          {m.messages.map((msg) => (
+            <div class:list={['fs-wa-bubble-row', msg.type === 'sent' ? 'fs-wa-bubble-row--sent' : 'fs-wa-bubble-row--recv']}>
+              <div class:list={['fs-wa-bubble', msg.type === 'sent' ? (msg.auto ? 'fs-wa-bubble--auto' : 'fs-wa-bubble--sent') : 'fs-wa-bubble--recv']}>
+                {msg.auto && (
+                  <div class="fs-wa-auto-label">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/></svg>
+                    {m.autoLabel}
+                  </div>
+                )}
+                <p>{msg.text}</p>
+                <div class="fs-wa-bubble-time">{msg.time}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="fs-wa-input-bar">
+          <div class="fs-wa-input">{m.inputPlaceholder}</div>
+          <div class="fs-wa-send" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

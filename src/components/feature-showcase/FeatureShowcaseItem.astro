@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  id: string;
+}
+
+const { title, description, id } = Astro.props;
+---
+
+<article class="feature-showcase-item" id={id}>
+  <header class="mb-8 text-center sm:mb-10">
+    <h3 class="my-5 font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+      {title}
+    </h3>
+    <p class="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+      {description}
+    </p>
+  </header>
+
+  <div class="fs-mockup overflow-hidden rounded-2xl border border-border bg-card shadow-glow">
+    <slot />
+  </div>
+</article>

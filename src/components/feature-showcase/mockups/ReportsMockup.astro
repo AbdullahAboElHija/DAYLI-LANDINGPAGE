@@ -1,0 +1,67 @@
+---
+import type { Locale } from '../../../i18n/ui';
+import { getDir } from '../../../i18n/ui';
+import { getFeatureMockupCopy } from '../../../i18n/featureMockups';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const m = getFeatureMockupCopy(locale).reports;
+const dir = getDir(locale);
+---
+
+<div class="fs-mockup-inner h-full min-h-[380px] sm:min-h-[440px]" dir={dir}>
+  <div class="flex h-full flex-col">
+    <div class="fs-mockup-header">
+      <div>
+        <h4 class="fs-mockup-title">{m.title}</h4>
+        <p class="fs-mockup-subtitle">{m.subtitle}</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="fs-mockup-chip">{m.templates}</div>
+        <div class="fs-mockup-chip fs-mockup-chip--primary">{m.newReport}</div>
+      </div>
+    </div>
+
+    <div class="fs-reports-content">
+      <div class="fs-reports-client-card">
+        <div class="fs-avatar fs-avatar--active fs-avatar--lg">{m.clientInit}</div>
+        <div>
+          <div class="fs-reports-client-name">{m.clientName}</div>
+          <div class="fs-reports-client-meta">{m.clientMeta}</div>
+        </div>
+      </div>
+
+      <div class="fs-reports-section-label">{m.reportType}</div>
+      <div class="fs-reports-types fs-reports-types--row">
+        {m.types.map((label, i) => (
+          <div class:list={['fs-reports-type', i === 0 && 'fs-reports-type--active']}>
+            {label}
+          </div>
+        ))}
+      </div>
+
+      <div class="fs-reports-section-label">{m.recentReports}</div>
+      <div class="fs-reports-recent">
+        {m.recent.map((r) => (
+          <div class="fs-reports-recent-row">
+            <div>
+              <div class="fs-reports-recent-name">{r.name}</div>
+              <div class="fs-reports-recent-date">{r.date}</div>
+            </div>
+            <div class="fs-reports-row-actions">
+              <span class:list={['fs-reports-status', r.sent && 'fs-reports-status--sent']}>{r.status}</span>
+              {r.sent ? (
+                <div class="fs-mockup-chip">{m.downloadPdf}</div>
+              ) : (
+                <div class="fs-mockup-chip fs-mockup-chip--primary">{m.sendToClient}</div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>

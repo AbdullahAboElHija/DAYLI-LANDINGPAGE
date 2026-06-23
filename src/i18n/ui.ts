@@ -21,8 +21,10 @@ export function getDir(locale: Locale): 'rtl' | 'ltr' {
 }
 
 export function getLocalePath(locale: Locale): string {
-  if (locale === 'he') return '/';
-  return `/${locale}/`;
+  const rawBase = import.meta.env.BASE_URL;
+  const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+  if (locale === 'he') return base;
+  return `${base}${locale}/`;
 }
 
 export interface PricingTier {
@@ -154,6 +156,10 @@ export interface Messages {
         suggestion3: string;
         pending: string;
       };
+      reports?: {
+        title: string;
+        description: string;
+      };
       whatsappMessages: {
         sent: string[];
         received: string[];
@@ -181,6 +187,9 @@ export interface Messages {
     heading: string;
     subheading: string;
     businessNamePlaceholder: string;
+    businessCategoryLabel: string;
+    businessCategoryDefault: string;
+    businessCategoryOptions: { value: string; label: string }[];
     namePlaceholder: string;
     phonePlaceholder: string;
     emailPlaceholder: string;
@@ -290,7 +299,7 @@ export const messages: Record<Locale, Messages> = {
         description: 'שליחת תזכורות אוטומטיות ללקוחות דרך וואטסאפ'
       },
       calendar: {
-        title: 'לוח שנה חכם',
+        title: 'לו״ז',
         description: 'ניהול לוח הזמנים והפגישות שלך בקלות'
       },
       crm: {
@@ -342,6 +351,10 @@ export const messages: Record<Locale, Messages> = {
         suggestion2: 'שלח תזכורות',
         suggestion3: 'סטטיסטיקות לקוחות',
         pending: 'ממתין לאישור'
+      },
+      reports: {
+        title: 'דוחות לקוחות',
+        description: 'יצירה ושליחה של דוחות מקצועיים ללקוחות בלחיצה אחת'
       },
       whatsappMessages: {
         sent: [
@@ -441,6 +454,15 @@ export const messages: Record<Locale, Messages> = {
       heading: 'צור איתנו קשר',
       subheading: 'נחזור אליך תוך יום עסקים.',
       businessNamePlaceholder: 'שם העסק',
+      businessCategoryLabel: 'קטגוריית עסק',
+      businessCategoryDefault: 'בחר קטגוריה',
+      businessCategoryOptions: [
+        { value: 'clinic', label: 'קליניקה / מרפאה' },
+        { value: 'salon', label: 'סלון יופי / ספא' },
+        { value: 'lessons', label: 'שיעורים פרטיים' },
+        { value: 'realestate', label: 'נדל"ן' },
+        { value: 'other', label: 'אחר' },
+      ],
       namePlaceholder: 'שם מלא',
       phonePlaceholder: 'מספר טלפון',
       emailPlaceholder: 'כתובת אימייל',
@@ -606,6 +628,10 @@ export const messages: Record<Locale, Messages> = {
         suggestion3: 'إحصائيات العملاء',
         pending: 'بانتظار التأكيد'
       },
+      reports: {
+        title: 'تقارير العملاء',
+        description: 'إنشاء وإرسال تقارير احترافية للعملاء بنقرة واحدة'
+      },
       whatsappMessages: {
         sent: [
           'مرحباً سارة، تذكير بموعدك غداً في الساعة 2:00 ظهراً',
@@ -704,6 +730,15 @@ export const messages: Record<Locale, Messages> = {
       heading: 'تواصل معنا',
       subheading: 'سنرد عليك خلال يوم عمل.',
       businessNamePlaceholder: 'اسم النشاط التجاري',
+      businessCategoryLabel: 'فئة النشاط التجاري',
+      businessCategoryDefault: 'اختر الفئة',
+      businessCategoryOptions: [
+        { value: 'clinic', label: 'عيادة / مركز طبي' },
+        { value: 'salon', label: 'صالون تجميل / سبا' },
+        { value: 'lessons', label: 'دروس خصوصية' },
+        { value: 'realestate', label: 'عقارات' },
+        { value: 'other', label: 'أخرى' },
+      ],
       namePlaceholder: 'الاسم الكامل',
       phonePlaceholder: 'رقم الهاتف',
       emailPlaceholder: 'البريد الإلكتروني',
@@ -869,6 +904,10 @@ export const messages: Record<Locale, Messages> = {
         suggestion3: 'Client stats',
         pending: 'Pending confirmation'
       },
+      reports: {
+        title: 'Client reports',
+        description: 'Create and send professional client reports in one click'
+      },
       whatsappMessages: {
         sent: [
           "Hi Sarah, just a reminder about your appointment tomorrow at 2:00 PM",
@@ -967,6 +1006,15 @@ export const messages: Record<Locale, Messages> = {
       heading: 'Get in touch',
       subheading: "We'll get back to you within one business day.",
       businessNamePlaceholder: 'Business name',
+      businessCategoryLabel: 'Business category',
+      businessCategoryDefault: 'Select a category',
+      businessCategoryOptions: [
+        { value: 'clinic', label: 'Clinic / Medical' },
+        { value: 'salon', label: 'Salon / Spa' },
+        { value: 'lessons', label: 'Private lessons' },
+        { value: 'realestate', label: 'Real estate' },
+        { value: 'other', label: 'Other' },
+      ],
       namePlaceholder: 'Full name',
       phonePlaceholder: 'Phone number',
       emailPlaceholder: 'Email address',

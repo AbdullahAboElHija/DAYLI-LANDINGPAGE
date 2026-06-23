@@ -11,13 +11,12 @@ import type { Locale } from '../i18n/ui';
 
 interface Props {
   locale: Locale;
-  canonicalPath: string;
 }
 
-const { locale, canonicalPath } = Astro.props;
+const { locale } = Astro.props;
 ---
 
-<BaseLayout locale={locale} canonicalPath={canonicalPath}>
+<BaseLayout locale={locale}>
   <Header locale={locale} />
   <main id="main">
     <Hero locale={locale} />

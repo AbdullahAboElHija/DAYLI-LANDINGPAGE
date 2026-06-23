@@ -1,0 +1,94 @@
+---
+import type { Locale } from '../../../i18n/ui';
+import { getDir } from '../../../i18n/ui';
+import { getFeatureMockupCopy } from '../../../i18n/featureMockups';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const m = getFeatureMockupCopy(locale).calendar;
+const dir = getDir(locale);
+---
+
+<div class="fs-mockup-inner h-full min-h-[380px] sm:min-h-[440px]" dir={dir}>
+  <div class="flex h-full flex-col">
+    <div class="fs-mockup-header">
+      <div class="flex items-center gap-2">
+        <h4 class="fs-mockup-title">{m.month}</h4>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#434655" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="flex gap-2">
+        <div class="fs-mockup-chip">{m.search}</div>
+        <div class="fs-mockup-chip">{m.filter}</div>
+        <div class="fs-mockup-chip fs-mockup-chip--primary">{m.newMeeting}</div>
+      </div>
+    </div>
+
+    <div class="fs-cal-days">
+      {m.days.map((day) => (
+        <div class:list={['fs-cal-day', day.cur && 'fs-cal-day--current', day.dim && 'fs-cal-day--dim']}>
+          <div class="fs-cal-day-label">{day.l}</div>
+          <div class="fs-cal-day-num">{day.d}</div>
+          {day.dot && <div class="fs-cal-day-dot"></div>}
+        </div>
+      ))}
+    </div>
+
+    <div class="fs-cal-timeline">
+      {m.events.map((event) => (
+        <div class="fs-cal-slot">
+          <div class="fs-cal-time">{event.time}</div>
+          {event.break ? (
+            <div class="fs-cal-slot-body">
+              <div class="fs-cal-event fs-cal-event--break">
+                <div class="fs-cal-event-name fs-cal-event-name--break">{m.lunchBreak}</div>
+              </div>
+            </div>
+          ) : event.draft ? (
+            <div class="fs-cal-slot-body">
+              <div class="fs-cal-event fs-cal-event--draft">
+                <div class="fs-cal-event-head">
+                  <span class="fs-cal-draft-badge">{m.draft}</span>
+                  <div class="fs-cal-event-name fs-cal-event-name--muted">{event.name}</div>
+                </div>
+                <div class="fs-cal-event-detail fs-cal-event-detail--muted">{event.detail}</div>
+              </div>
+            </div>
+          ) : !event.name ? (
+            <div class:list={['fs-cal-slot-body', event.tall && 'fs-cal-slot-body--tall', !event.tall && 'fs-cal-slot-body--empty']} />
+          ) : (
+            <div class:list={['fs-cal-slot-body', event.tall && 'fs-cal-slot-body--tall']}>
+              {event.tall && (
+                <div class="fs-cal-now-line" aria-hidden="true"><span></span><div></div></div>
+              )}
+              <div class:list={['fs-cal-event', event.tall ? 'fs-cal-event--indigo fs-cal-event--offset' : 'fs-cal-event--blue']}>
+                <div class="fs-cal-event-head">
+                  {event.init && (
+                    <div class:list={['fs-cal-event-avatar', event.tall && 'fs-cal-event-avatar--indigo']}>{event.init}</div>
+                  )}
+                  <div class="fs-cal-event-name">{event.name}</div>
+                </div>
+                <div class:list={['fs-cal-event-detail', event.tall && 'fs-cal-event-detail--indigo']}>{event.detail}</div>
+                {event.similar && (
+                  <div class="fs-cal-similar">
+                    <div class="fs-cal-similar-label">{m.similarEvents}</div>
+                    <div class="flex gap-1.5">
+                      {event.similar.map((s) => (
+                        <div class="fs-cal-similar-chip">
+                          <div class="font-semibold">{s.name}</div>
+                          <div>{s.date}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

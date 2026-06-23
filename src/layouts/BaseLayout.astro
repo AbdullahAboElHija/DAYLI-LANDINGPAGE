@@ -1,23 +1,22 @@
 ---
 import '../styles/global.css';
 import type { Locale } from '../i18n/ui';
-import { getDir, getMessages } from '../i18n/ui';
+import { getDir, getLocalePath, getMessages } from '../i18n/ui';
 
 interface Props {
   locale: Locale;
-  canonicalPath: string;
 }
 
-const { locale, canonicalPath } = Astro.props;
+const { locale } = Astro.props;
 const t = getMessages(locale);
 const dir = getDir(locale);
 const site = Astro.site?.origin ?? 'https://dayli.co.il';
-const canonical = new URL(canonicalPath, site).href;
+const canonical = new URL(getLocalePath(locale), `${site}/`).href;
 
 const alternatePaths = {
-  he: '/',
-  ar: '/ar/',
-  en: '/en/',
+  he: getLocalePath('he'),
+  ar: getLocalePath('ar'),
+  en: getLocalePath('en'),
 };
 ---
 
@@ -34,7 +33,7 @@ const alternatePaths = {
         <link rel="alternate" hreflang={lang} href={new URL(path, site).href} />
       ))
     }
-    <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(getLocalePath('he'), `${site}/`).href} />
     <title>{t.meta.title}</title>
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
