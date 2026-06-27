@@ -3,7 +3,5 @@
   "name": "landing-page",
   "compatibility_date": "2026-06-27",
   "assets": { "directory": "./dist" },
-  "routes": [
-    { "pattern": "www.dayli.co.il", "custom_domain": true }
-  ]
+  "workers_dev": true
 }
