@@ -109,6 +109,10 @@
     @apply inline-flex h-8 shrink-0 cursor-pointer items-center rounded-full bg-foreground px-3 text-xs font-medium text-background transition-opacity duration-200 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:h-9 sm:px-4 sm:text-sm;
   }
 
+  .btn-nav-login {
+    @apply inline-flex h-8 shrink-0 cursor-pointer items-center rounded-full bg-brand px-3 text-xs font-medium text-primary-foreground transition-opacity duration-200 hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:h-9 sm:px-4 sm:text-sm;
+  }
+
   .section-container {
     @apply mx-auto max-w-7xl px-5 sm:px-8;
   }
