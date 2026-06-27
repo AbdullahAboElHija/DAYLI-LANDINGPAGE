@@ -1,11 +1,11 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
-const isVercel = process.env.VERCEL === '1';
+const useGithubPagesBase = process.env.GITHUB_PAGES === '1';
 
 export default defineConfig({
-  site: isVercel ? undefined : 'https://abdullahaboelhija.github.io',
-  base: isVercel ? undefined : '/DAYLI-LANDINGPAGE',
+  site: useGithubPagesBase ? 'https://abdullahaboelhija.github.io' : undefined,
+  base: useGithubPagesBase ? '/DAYLI-LANDINGPAGE' : undefined,
   integrations: [tailwind()],
   i18n: {
     defaultLocale: 'he',
